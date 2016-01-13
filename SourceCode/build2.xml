@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Sep 2, 2015 9:50:09 AM                                                        
+
+     AntDemo 
+     description
+                   
+     dparr1                                                                
+     ====================================================================== -->
+<project name="AntDemo" default="default">
+   	<property name="mymessage" value="Happy weekend"/>
+	<property name="scr.dir" location="src"/>
+	<property name="build.dir" location="build/classes"/>
+	<property name="dist.dir" location="dist"/>
+	<property name="docs.dir" location="doc"/>
+	<echo>The project is ${ant.project.name}</echo>
+	
+
+<!-- ================================= 
+          target: default              
+         ================================= -->
+    <target name="default" depends="run, jar,docs" description="description">
+        <echo> ${mymessage}</echo>
+    </target>
+	
+<!-- ================================= 
+	 target: clean             
+	 ================================= -->
+	    <target name="clean"   description="Clean or remove existing file">
+				<delete dir = "${build.dir}"></delete>
+				<delete dir = "${dist.dir}"></delete>
+				<delete dir = "${docs.dir}"></delete>
+	    </target>
+
+<!-- ================================= 
+			 target: makedir             
+	================================= -->
+		<target name="makedir"  depends="clean" description="Clean or remove existing file">
+		<mkdir dir = "build/classes"/>
+		<mkdir dir = "dist"/>
+		<mkdir dir = "docs"/>
+		 </target>
+	
+<!-- ================================= 
+		 target: compile             
+		 ================================= -->
+		<target name="compile" depends="makedir"  description="description">
+		 <javac destdir="build/classes" srcdir="src"></javac>
+		 </target>
+
+	<!-- ================================= 
+	 target: jar             
+	 ================================= -->
+	<target name="jar" depends="compile"  description="description">
+	 <jar destfile="dist/hello.jar" basedir="build/classes"></jar>
+	 </target>
+					
+<!-- ================================= 
+	target: run              
+	================================= -->
+	<target name="run" depends="jar">
+	<java classpath="build/classes" 
+		failonerror="true"
+		classname="com.training.JavaDemo"> 
+	</java>
+		</target>				
+	
+	<target name="docs" depends="compile">
+		<javadoc packagenames= "src" sourcepath= "src"
+		destdir = "docs">
+			
+			<fileset dir="src">
+				<include name ="**"/>
+					</fileset>
+			</javadoc>
+		</target>
+
+		
+</project>

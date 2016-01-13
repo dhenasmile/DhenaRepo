@@ -1,0 +1,39 @@
+<project name="AntDemo" default="war">
+   	
+	<property name="src.dir" location="src"/>
+	<property name="build.dir" location="build/classes"/>
+	<property name="dist.dir" location="dist"/>
+	<echo>The project is ${ant.project.name}</echo>
+	 <!--<tstamp><format property="DSTAMP" pattern="dd-MM-yyyy"/></tstamp>-->
+	<tstamp><format property="TSTAMP" pattern="dd-MM-yyyy_HH-mm-ss"/></tstamp>
+
+	<target name="clean"   description="Clean or remove existing file">
+			<delete dir = "${build.dir}"></delete>
+			<delete dir = "${dist.dir}"></delete>
+			
+	</target>
+
+	<target name="makedir" depends="clean">
+		<mkdir dir = "build/classes"/>
+		<mkdir dir = "dist"/>
+		
+	</target>
+
+	<target name="compile" depends="makedir">
+		<javac includeantruntime="false" srcdir="${src.dir}" destdir="${build.dir}"/>	
+
+	</target>
+
+	<target name="jar" depends="compile">
+		<jar destfile="${dist.dir}/proj-${TSTAMP}.jar" basedir="build/classes">
+		<exclude name= "**/src/**"/>
+	</jar>
+		
+	</target>
+	<target name="war" depends="jar">
+		<war warfile="${dist.dir}/proj-proj-${TSTAMP}.war"
+		webxml="WebContent/WEB-INF/web.xml" >
+		<exclude name= "**/src/**"/>
+		</war>
+	</target>
+</project>

@@ -2,4 +2,5 @@
  
 #main-table {
   background-image: url("sapient.png");
+  background: linear-gradient(black, white);
 }
